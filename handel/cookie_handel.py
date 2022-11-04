@@ -18,23 +18,20 @@ class CookieHandel:
     def __init__(self, actor_id):
         self.actor_id = actor_id
         self.cookie_id = actor_id.id
+        self.__manager = CookieManager()
 
     async def get_cookie(self):
         # 根据创建一个将要发送的消息
-        cookie_manager = CookieManager()
         # 查询所有的cookie
-        cookie_list = await cookie_manager.list_cookies()
-        # 打乱顺序
+        cookie_list = await self.__manager.list_cookies()
+        # 随机返回一个
 
     '''
         创建一条普通cookie
     '''
 
-    @staticmethod
-    async def generate_cookie():
-        cookie_map = ""
-        cookie_manager = CookieManager()
+    async def generate_cookie(self, cookie_map):
         cookie = cookie_pb.CookieMessage()
-        cookie_manager.create_cookie(cookie, cookie_map)
-        await cookie_manager.add_or_update_cookie(cookie)
+        self.__manager.create_cookie(cookie, cookie_map)
+        await self.__manager.add_or_update_cookie(cookie)
         return cookie

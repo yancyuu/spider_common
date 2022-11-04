@@ -3,7 +3,11 @@ from dapr.actor import ActorInterface, actormethod
 
 class ProxyActorInterface(ActorInterface):
     @actormethod(name="getProxy")
-    async def get_proxy(self, data: dict) -> object:
+    async def get_proxy(self) -> object:
+        ...
+
+    @actormethod(name="generateProxy")
+    async def generate_proxy(self, data: dict) -> object:
         ...
 
     @actormethod(name="GetMyData")

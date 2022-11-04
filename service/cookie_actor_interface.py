@@ -3,7 +3,11 @@ from dapr.actor import ActorInterface, actormethod
 
 class CookieActorInterface(ActorInterface):
     @actormethod(name="getCookie")
-    async def get_cookie(self, data: dict) -> object:
+    async def get_cookie(self) -> object:
+        ...
+
+    @actormethod(name="generateCookie")
+    async def generate_cookie(self, data: dict) -> object:
         ...
 
     @actormethod(name="GetMyData")

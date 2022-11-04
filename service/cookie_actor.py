@@ -1,5 +1,6 @@
 import datetime
 from dapr.actor import Actor, Remindable
+from handel.cookie_handel import CookieHandel
 from service.cookie_actor_interface import CookieActorInterface
 from typing import Optional
 
@@ -15,6 +16,13 @@ class CookieActor(Actor, CookieActorInterface, Remindable):
 
     def __init__(self, ctx, actor_id):
         super(CookieActor, self).__init__(ctx, actor_id)
+        self.__handel = CookieHandel(actor_id)
+
+    async def get_cookie(self) -> object:
+        return await self.__handel.get_cookie()
+
+    async def generate_cookie(self, data: dict) -> object:
+        return await self.__handel.generate_cookie(data)
 
     async def _on_activate(self) -> None:
         """An callback which will be called whenever actor is activated."""

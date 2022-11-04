@@ -17,6 +17,6 @@ message ProxyMessage {
   ProxyStatus status = 3;
   // 使用时间
   string use_time = 4;
-  // 代理ip值
-  string ip = 5;
+  // 代理url值
+  map<string ,string> url = 5;
 }

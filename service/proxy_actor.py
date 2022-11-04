@@ -1,3 +1,4 @@
+from handel.proxy_handel import ProxyHandel
 import datetime
 from dapr.actor import Actor, Remindable
 from service.proxy_actor_interface import ProxyActorInterface
@@ -15,6 +16,13 @@ class ProxyActor(Actor, ProxyActorInterface, Remindable):
 
     def __init__(self, ctx, actor_id):
         super(ProxyActor, self).__init__(ctx, actor_id)
+        self.__handel = ProxyHandel(actor_id)
+
+    async def get_cookie(self) -> object:
+        return await self.__handel.get_proxy()
+
+    async def generate_cookie(self, data: dict) -> object:
+        return await self.__handel.generate_proxy(data)
 
     async def _on_activate(self) -> None:
         """An callback which will be called whenever actor is activated."""
@@ -51,8 +59,8 @@ class ProxyActor(Actor, ProxyActorInterface, Remindable):
         if enabled:
             # Register 'demo_reminder' reminder and call receive_reminder method
             await self.register_reminder(
-                'demo_reminder',               # reminder name
-                b'reminder_state',             # user_state (bytes)
+                'demo_reminder',  # reminder name
+                b'reminder_state',  # user_state (bytes)
                 # The amount of time to delay before firing the reminder
                 datetime.timedelta(seconds=5),
                 datetime.timedelta(seconds=5),  # The time interval between firing of reminders
@@ -71,9 +79,9 @@ class ProxyActor(Actor, ProxyActorInterface, Remindable):
         if enabled:
             # Register 'demo_timer' timer and call timer_callback method
             await self.register_timer(
-                'demo_timer',                   # timer name
-                self.timer_callback,            # Callback method
-                'timer_state',                  # Parameter to pass to the callback method
+                'demo_timer',  # timer name
+                self.timer_callback,  # Callback method
+                'timer_state',  # Parameter to pass to the callback method
                 # Amount of time to delay before the callback is invoked
                 datetime.timedelta(seconds=5),
                 datetime.timedelta(seconds=5),  # Time interval between invocations
