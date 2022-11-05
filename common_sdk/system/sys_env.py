@@ -2,8 +2,9 @@
 
 import os
 
+
 def get_env(key, default=None):
-    value = os.environ.get(key)
+    value = os.getenv(key)
     if value is None:
         return default
     return value

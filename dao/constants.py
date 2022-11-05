@@ -5,7 +5,7 @@ class DBConstants:
     # 爬虫相关
     MONGODB_SPIDER_DB_NAME = "spider_db"
     # 存内容的数据库
-    PARSE_COLLECTION_NAME = "data"
+    PARSE_COLLECTION_NAME = "spider"
     # 存cookie的数据库
     COOKIE_COLLECTION_NAME = "cookie"
     # 存proxy的数据库

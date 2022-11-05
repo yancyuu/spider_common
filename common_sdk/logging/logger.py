@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from flask import request
 from logging.handlers import SysLogHandler
-
 from ..base_class.singleton import SingletonMetaThreadSafe as SingletonMetaclass
 from ..system import sys_env
-from ..util import file_utils
+from ..util import file_utils, id_generator
 
 
 APPNAME_ENV_NAME = 'APPNAME'
@@ -50,7 +48,7 @@ class Logger(metaclass=SingletonMetaclass):
     @property
     def message_uuid(self):
         try:
-            message_uuid = request.headers.get("Message-Uuid")
+            message_uuid = id_generator.generate_common_id()
             return message_uuid
         except:
             return None

@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
-import time
-from common_sdk.logging.logger import logger
-from common_sdk.data_transform import protobuf_transformer
-from dapr.ext.fastapi import DaprApp
-from manager.cookie_manager import CookieManager
-import proto.cookie_pb2 as cookie_pb
+from common_sdk.data_transform.protobuf_transformer import protobuf_to_dict
+from manager.cookie.cookie_manager import CookieManager
+import proto.cookie.cookie_pb2 as cookie_pb
 
 
 '''
@@ -34,4 +30,4 @@ class CookieHandel:
         cookie = cookie_pb.CookieMessage()
         self.__manager.create_cookie(cookie, cookie_map)
         await self.__manager.add_or_update_cookie(cookie)
-        return cookie
+        return protobuf_to_dict(cookie)

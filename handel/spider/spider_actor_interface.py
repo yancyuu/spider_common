@@ -1,13 +1,17 @@
 from dapr.actor import ActorInterface, actormethod
 
 
-class CookieActorInterface(ActorInterface):
-    @actormethod(name="getCookie")
-    async def get_cookie(self) -> object:
+class SpiderActorInterface(ActorInterface):
+    @actormethod(name="listSpider")
+    async def list_spider(self) -> object:
         ...
 
-    @actormethod(name="generateCookie")
-    async def generate_cookie(self, data: dict) -> object:
+    @actormethod(name="generateSpider")
+    async def generate_spider(self, data: dict) -> object:
+        ...
+
+    @actormethod(name="startCrawling")
+    async def start_crawling(self) -> object:
         ...
 
     @actormethod(name="GetMyData")

@@ -3,12 +3,14 @@ syntax = "proto3";
 // 消息通知
 message SpiderMessage {
   enum SpiderStatus {
-    // 刚创建还未解析的时候
+    // 刚创建还未请求的时候
     NONE = 0;
     // 需要重试的
     RETRY = 1;
-    // 已经解析
-    PARSED = 2;
+    // 需要解析
+    PARSE = 2;
+    // 完成
+    FINISH = 3;
   }
   // 唯一id
   string id = 1;
@@ -22,4 +24,8 @@ message SpiderMessage {
   string retry_time = 6;
   // 解析时间
   string parse_time = 7;
+  // 请求方法
+  string request_method = 8;
+  // 请求参数
+  map<string ,string> param = 9;
 }

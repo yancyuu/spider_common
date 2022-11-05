@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import proto.cookie_pb2 as cookie_pb
+import proto.cookie.cookie_pb2 as cookie_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper

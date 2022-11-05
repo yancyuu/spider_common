@@ -18,5 +18,5 @@ message ProxyMessage {
   // 使用时间
   string use_time = 4;
   // 代理url值
-  map<string ,string> url = 5;
+  string url = 5;
 }

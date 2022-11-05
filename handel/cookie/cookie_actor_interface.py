@@ -1,13 +1,13 @@
 from dapr.actor import ActorInterface, actormethod
 
 
-class ProxyActorInterface(ActorInterface):
-    @actormethod(name="getProxy")
-    async def get_proxy(self) -> object:
+class CookieActorInterface(ActorInterface):
+    @actormethod(name="GetCookie")
+    async def get_cookie(self) -> object:
         ...
 
-    @actormethod(name="generateProxy")
-    async def generate_proxy(self, data: dict) -> object:
+    @actormethod(name="GenerateCookie")
+    async def generate_cookie(self, data: dict) -> object:
         ...
 
     @actormethod(name="GetMyData")

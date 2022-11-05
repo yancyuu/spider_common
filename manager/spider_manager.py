@@ -4,7 +4,7 @@ import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.spider_da_helper import SpiderDAHelper
 from manager.manager_base import ManagerBase
-import proto.spider_pb2 as spider_pb
+import proto.spider.spider_pb2 as spider_pb
 
 
 class SpiderManager(ManagerBase):
@@ -19,31 +19,26 @@ class SpiderManager(ManagerBase):
         return self._da_helper
 
     @staticmethod
-    def create_spider(spider, url=None):
-        if url is None:
+    def create_spider(spider, ip=None):
+        if ip is None:
             return
         spider.id = generate_common_id()
-        spider.url = url
-        spider.status = spider_pb.SpiderMessage.SpiderStatus.NONE
+        spider.ip = ip
+        spider.status = spider_pb.SpiderMessage.spiderStatus.NONE
         spider.create_time = int(time.time())
         return spider
 
     async def get_spider(self, id=None):
         return await self.da_helper.get_spider(id=id)
 
-    def update_spider(self, spider, status=None, request=None, response=None):
+    def update_spider(self, spider, status=None):
         self.__update_status(spider, status)
-        self.__update_request(spider, request)
-        self.__update_response(spider, response)
 
     async def list_spiders(self, status=None):
-        spiders = await self.da_helper.list_spiders(
+        proxies = await self.da_helper.list_spiders(
             status=status
         )
-        return spiders
-
-    async def list_not_confirmed_spiders(self, ids=None, target_id=None):
-        return await self.da_helper.list_not_confirmed_spiders(ids, target_id)
+        return proxies
 
     async def add_or_update_spider(self, spider):
         await self.da_helper.add_or_update_spider(spider)
@@ -53,24 +48,11 @@ class SpiderManager(ManagerBase):
         if status is None:
             return
         if isinstance(status, str):
-            status = spider_pb.SpiderMessage.SpiderStatus.Value(status)
-        if status == spider_pb.SpiderMessage.SpiderStatus.RETRY:
-            spider.retry_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-        elif status == spider_pb.SpiderMessage.SpiderStatus.PARSED:
-            spider.parse_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+            status = spider_pb.SpiderMessage.spiderStatus.Value(status)
+        if status == spider_pb.SpiderMessage.spiderStatus.USED:
+            spider.use_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         spider.status = status
 
-    @staticmethod
-    def __update_request(spider, request):
-        if request is None:
-            return
-        spider.request = request
-
-    @staticmethod
-    def __update_response(spider, response):
-        if response is None:
-            return
-        spider.response = response
 
 
 

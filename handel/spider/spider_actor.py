@@ -1,11 +1,11 @@
-from handel.proxy_handel import ProxyHandel
+from handel.spider.spider_handel import SpiderHandel
 import datetime
 from dapr.actor import Actor, Remindable
-from service.proxy_actor_interface import ProxyActorInterface
+from handel.spider.spider_actor_interface import SpiderActorInterface
 from typing import Optional
 
 
-class ProxyActor(Actor, ProxyActorInterface, Remindable):
+class SpiderActor(Actor, SpiderActorInterface, Remindable):
     """Implements DemoActor actor service
     This shows the usage of the below actor features:
     1. Actor method invocation
@@ -15,14 +15,20 @@ class ProxyActor(Actor, ProxyActorInterface, Remindable):
     """
 
     def __init__(self, ctx, actor_id):
-        super(ProxyActor, self).__init__(ctx, actor_id)
-        self.__handel = ProxyHandel(actor_id)
+        super(SpiderActor, self).__init__(ctx, actor_id)
+        self.__handel = SpiderHandel(actor_id)
 
-    async def get_cookie(self) -> object:
-        return await self.__handel.get_proxy()
+    async def list_spiders(self) -> object:
+        """ 提供给其他服务展示spider数据"""
+        return await self.__handel.list_spiders()
 
-    async def generate_cookie(self, data: dict) -> object:
-        return await self.__handel.generate_proxy(data)
+    async def generate_spider(self, data: dict) -> object:
+        """ 提供给其他服务创建一条spider数据"""
+        return await self.__handel.generate_spider(data)
+
+    async def start_crawling(self) -> object:
+        """ 提供给其他服务开始爬取spider数据"""
+        return await self.__handel.start_crawling()
 
     async def _on_activate(self) -> None:
         """An callback which will be called whenever actor is activated."""

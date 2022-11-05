@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import proto.spider_pb2 as spider_pb
+import spider.proto.spider_pb2 as spider_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper
@@ -31,7 +31,7 @@ class SpiderDAHelper(MongodbClientHelper):
         spider = await self._spider_collection.find_one(matcher)
         return protobuf_transformer.dict_to_protobuf(spider, spider_pb.spiderMessage)
 
-    async def list_proxies(self, status=None):
+    async def list_spiders(self, status=None):
         matcher = {}
         self.__set_matcher_status(matcher, status)
         self.__set_matcher_not_parsed_status(matcher)
