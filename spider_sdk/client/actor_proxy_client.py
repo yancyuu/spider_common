@@ -24,3 +24,6 @@ class ActorProxyClient:
     def create_proxy_actor_proxy(self):
         return ActorProxy.create('ProxyActor', ActorId(self.actor_id), ProxyActorInterface)
 
+    def create_spider_actor_proxy(self):
+        return ActorProxy.create('SpiderActor', ActorId(self.actor_id), ProxyActorInterface)
+

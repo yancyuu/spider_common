@@ -2,7 +2,7 @@
 from common_sdk.logging.logger import logger
 from urllib.parse import urlencode
 
-import requests
+import httpx
 
 """
     通用的http处理类
@@ -12,6 +12,7 @@ import requests
 class HttpClient(object):
 
     def __init__(self, builder):
+        self._client = None
         self._builder = builder.url
 
     '''
@@ -22,11 +23,13 @@ class HttpClient(object):
         url = 'http://{}/'.format(self._builder.url)
         try:
             if self._builder.proxy:
-                logger.info("发送POST请求---->url{}   proxy---->{}".format(url, self._builder.proxy))
-                res_json = requests.post(url, json=self._builder.param, headers=self._builder.headers, proxies=self._builder.proxy)
+                self._client = httpx.AsyncClient(proxies=self._builder.proxy)
+                logger.info("发送POST请求---->url={}   proxy---->{}".format(url, self._builder.proxy))
             else:
-                logger.info("发送POST请求---->url{}".format(url))
-                res_json = requests.post(url, json=self._builder.param, headers=self._builder.headers)
+                self._client = httpx.AsyncClient()
+                logger.info("发送POST请求---->url={}".format(url))
+            res_json = self._client.post(url, json=self._builder.param, headers=self._builder.headers)
+            logger.info("接受返回值---->res_json={}".format(res_json))
             if res_json:
                 return res_json
             else:
@@ -44,13 +47,15 @@ class HttpClient(object):
             url += "?" + urlencode(self._builder.param())
         try:
             if self._builder.proxy:
+                self._client = httpx.AsyncClient(proxies=self._builder.proxy)
                 logger.info("发送GET请求---->url{}   proxy---->{}".format(url, self._builder.proxy))
-                res = requests.get(url, headers=self._builder.headers, proxies=self._builder.proxy)
             else:
+                self._client = httpx.AsyncClient()
                 logger.info("发送GET请求---->url{}".format(url))
-                res = requests.get(url, headers=self._builder.headers)
+            res = self._client.get(url, headers=self._builder.headers)
+            logger.info("接受返回值---->{}".format(res))
             if res:
-                return res.content
+                return res
             else:
                 return ""
         except Exception as e:
