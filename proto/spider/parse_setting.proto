@@ -20,9 +20,5 @@ enum ParseStatus {
   // 删除时间
   int32 delete_time = 5;
   // 下一页的目标url规则
-  string next_page_rules = 6;
-  // 步骤
-  int32 step = 7;
-  // 总共爬取步骤
-  int32 total_step = 9;
+  string next_spider_rules = 6;
 }
