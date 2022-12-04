@@ -10,6 +10,10 @@ enum ParseStatus {
     // 删除
     DELETED = 2;
   }
+  enum RequestMethod {
+    GET= 0;
+    POST = 1;
+  }
   // 唯一id
   string id = 1;
   ParseStatus status = 2;
@@ -21,4 +25,8 @@ enum ParseStatus {
   int32 delete_time = 5;
   // 下一页的目标url规则
   string next_spider_rules = 6;
+  // 请求方法
+  RequestMethod request_method = 7;
+  // 下一页是否是重复类型：如每一页中都有前一页后一页这种情况
+  bool enable_next_spider_repeated = 8;
 }
