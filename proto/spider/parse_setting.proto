@@ -14,7 +14,7 @@ enum ParseStatus {
     GET= 0;
     POST = 1;
   }
-  enum ParseRules {
+  enum ParseType {
     // 正则
     REGULAR= 0;
     // xpath
@@ -24,15 +24,17 @@ enum ParseStatus {
   string id = 1;
   ParseStatus status = 2;
   // 解析规则
-  ParseRules parse_rules = 3;
+  ParseType parse_type = 3;
+  // 解析规则
+  string parse_rules = 4;
   // 创建时间
-  int32 create_time = 4;
+  int32 create_time = 5;
   // 删除时间
-  int32 delete_time = 5;
+  int32 delete_time = 6;
   // 下一页的目标url规则
-  string next_spider_rules = 6;
+  string next_spider_rules = 7;
   // 请求方法
-  RequestMethod request_method = 7;
+  RequestMethod request_method = 8;
   // 下一页是否是重复类型：如每一页中都有前一页后一页这种情况
-  bool enable_next_spider_repeated = 8;
+  bool enable_next_spider_repeated = 9;
 }
