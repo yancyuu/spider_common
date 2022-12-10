@@ -14,11 +14,17 @@ enum ParseStatus {
     GET= 0;
     POST = 1;
   }
+  enum ParseRules {
+    // 正则
+    REGULAR= 0;
+    // xpath
+    XPATH = 1;
+  }
   // 唯一id
   string id = 1;
   ParseStatus status = 2;
   // 解析规则
-  string parse_rules = 3;
+  ParseRules parse_rules = 3;
   // 创建时间
   int32 create_time = 4;
   // 删除时间
